@@ -57,12 +57,15 @@ func clear(l lisp.Lisp) {
 // returns an int identifier for this page, which is unique in this frame only
 func page2lisp(l lisp.Lisp, p page, pts []point) int {
 	lisppoints := fmt.Sprintf("(list (cons %f %f) (cons %f %f) (cons %f %f) (cons %f %f))", pts[0].x, pts[0].y, pts[1].x, pts[1].y, pts[2].x, pts[2].y, pts[3].x, pts[3].y)
-	dID, _ := l.Eval(fmt.Sprintf(`(dl_record 'page
+	dID, err := l.Eval(fmt.Sprintf(`(dl_record 'page
         ('id %d)
         ('points %s)
         ('angle %f)
         ('code %q)
     )`, p.id, lisppoints, p.angle, p.code))
+	if err != nil {
+		panic(err)
+	}
 	return int(dID.AsNumber())
 }
 
