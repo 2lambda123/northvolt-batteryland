@@ -29,16 +29,15 @@ func Run() {
 	projection := gocv.NewWindow("projector")
 	defer projection.Close()
 
+	// cResults := calibrationResults{
+	// 	pixelsPerCM:     8.33666,
+	// 	displacement:    point{93, 0},
+	// 	displayRatio:    0.93,
+	// 	referenceColors: []color.RGBA{{201, 66, 67, 0}, {88, 101, 65, 0}, {74, 57, 88, 0}, {217, 109, 72, 0}},
+	// }
+	// cResults = calibrationResults{pixelsPerCM: 17.926589332648117, displacement: point{x: -297.25, y: -46}, displayRatio: 1, referenceColors: []color.RGBA{color.RGBA{R: 0xdc, G: 0x14, B: 0x19, A: 0x0}, color.RGBA{R: 0x29, G: 0x93, B: 0x0, A: 0x0}, color.RGBA{R: 0xf, G: 0x36, B: 0x61, A: 0x0}, color.RGBA{R: 0xe1, G: 0x65, B: 0x0, A: 0x0}}}
 	cResults := calibration(webcam, debugwindow, projection)
-	fmt.Println(cResults)
-	/*
-		cResults := calibrationResults{
-			pixelsPerCM:     8.33666,
-			displacement:    image.Pt(93, 0),
-			displayRatio:    0.93,
-			referenceColors: []color.RGBA{{201, 66, 67, 0}, {88, 101, 65, 0}, {74, 57, 88, 0}, {217, 109, 72, 0}},
-		}
-	*/
+	fmt.Printf("%#v\n", cResults)
 	vision(webcam, debugwindow, projection, cResults)
 }
 
