@@ -22,7 +22,7 @@ func main() {
 	talk.AddPageFromShorthand("ygybr", "brgry", "gbgyg", "bgryy", `(claim this 'modifies 'processdata)`)
 
 	//page2
-	talk.AddPageFromShorthand("yggyg", "rgyrb", "bybbg", "brgrg", `(claim this 'cell 'c-019052469952)`)
+	talk.AddPageFromShorthand("yggyg", "rgyrb", "bybbg", "brgrg", `(claim this 'cell 'testid)`)
 
 	//page that always counts as recognised but doesnt have to be present physically
 	talk.AddBackgroundPage(testpage)

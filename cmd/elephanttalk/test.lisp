@@ -109,10 +109,9 @@
         (gocv:text illu (pr:kind (car results)) (point2d (+ 20 (car p)) (+ offset (cdr p))) 0.5 red 2)
         (print-results illu (cdr results) p offset))))))
 
-(define processdata (lambda (id points angle)
+(define processdata (lambda (cellid points angle)
     (let ((center (midpoint points))
           (ulhc (car points))
-          (cellid (symbol->string id))
           (unangle (* -360 (/ angle (* 2 pi))))
           (illu (make-illumination)))
       (let ((m (gocv:rotation_matrix2D (car center) (cdr center) unangle 1.0))
@@ -126,6 +125,6 @@
   (claim ,?page 'pointing 30))
 
 (when ((modifies ,?page ,?func) (points-at ,?page ,?cellpage) (cell ,?cellpage ,?id) ((page points) ,?cellpage ,?points) ((page angle) ,?cellpage ,?angle)) do
-  (,?func (quote ,?id) (quote ,?points) ,?angle))
+  (,?func ,?id (quote ,?points) ,?angle))
 
 )

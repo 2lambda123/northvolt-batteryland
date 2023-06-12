@@ -17,6 +17,12 @@ var (
 	beamerWidth, beamerHeight = 1280, 720
 )
 
+// hacky stuff for demo
+var (
+	cellid string = "c-014086797990"
+	other  string = "c-019052469952"
+)
+
 func Run() {
 	webcam, err := gocv.VideoCaptureDevice(1)
 	if err != nil {
@@ -90,6 +96,7 @@ func vision(webcam *gocv.VideoCapture, debugwindow, projection *gocv.Window, cRe
 		pixPerCM *= (1. / cResults.displayRatio) - 1.
 	}
 	l.Eval(fmt.Sprintf("(define pixelsPerCM %f)", pixPerCM))
+	l.Eval(fmt.Sprintf(`(define testid %q)`, cellid))
 
 	fi := frameInput{
 		webcam:      webcam,
@@ -370,6 +377,9 @@ func vision(webcam *gocv.VideoCapture, debugwindow, projection *gocv.Window, cRe
 	}, cResults.referenceColors, 10); err != nil {
 		fmt.Println(err)
 	}
+	// TODO: loop for demo, changes nvid on cell page (hack to simulate scan!)
+	cellid, other = other, cellid
+	vision(webcam, debugwindow, projection, cResults)
 }
 
 // TODO: only works if area to be colored is still black

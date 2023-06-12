@@ -21,8 +21,8 @@ func AddPageFromShorthand(ulhc, urhc, lrhc, llhc, code string) bool {
 	return addToDB(page{
 		ulhc: cornerShorthand(ulhc),
 		urhc: cornerShorthand(urhc),
-		llhc: cornerShorthand(llhc),
 		lrhc: cornerShorthand(lrhc),
+		llhc: cornerShorthand(llhc),
 		code: code,
 	})
 }
