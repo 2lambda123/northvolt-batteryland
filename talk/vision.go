@@ -18,7 +18,7 @@ var (
 )
 
 func Run() {
-	webcam, err := gocv.VideoCaptureDevice(0)
+	webcam, err := gocv.VideoCaptureDevice(1)
 	if err != nil {
 		panic(err)
 	}
@@ -277,6 +277,9 @@ func vision(webcam *gocv.VideoCapture, debugwindow, projection *gocv.Window, cRe
 				if !found {
 					continue
 				}
+			}
+			if _, ok := pages[p.id]; ok {
+				continue
 			}
 			// TODO: if ulhc is not properly detected, this will cause issues
 			for i := 0; i < 4; i++ {

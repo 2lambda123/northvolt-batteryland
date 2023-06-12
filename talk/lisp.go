@@ -9,7 +9,6 @@ import (
 	"github.com/deosjr/whistle/datalog"
 	"github.com/deosjr/whistle/kanren"
 	"github.com/deosjr/whistle/lisp"
-	"github.com/northvolt/graphql-schema/model"
 )
 
 //go:embed talk.lisp
@@ -24,22 +23,6 @@ func LoadRealTalk() lisp.Lisp {
 	}
 	opencv.Load(l.Env)
 	northvolt.Load(l.Env)
-	id := "c-001697947722"
-	out, err := l.Eval(fmt.Sprintf("(dt:identity %q)", id))
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		identity := out.AsPrimitive().(model.NorthvoltIdentity)
-		fmt.Println(identity)
-	}
-	// from cache
-	out, err = l.Eval(fmt.Sprintf("(dt:identity %q)", id))
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		identity := out.AsPrimitive().(model.NorthvoltIdentity)
-		fmt.Println(identity)
-	}
 	return l
 }
 
@@ -57,12 +40,15 @@ func clear(l lisp.Lisp) {
 // returns an int identifier for this page, which is unique in this frame only
 func page2lisp(l lisp.Lisp, p page, pts []point) int {
 	lisppoints := fmt.Sprintf("(list (cons %f %f) (cons %f %f) (cons %f %f) (cons %f %f))", pts[0].x, pts[0].y, pts[1].x, pts[1].y, pts[2].x, pts[2].y, pts[3].x, pts[3].y)
-	dID, _ := l.Eval(fmt.Sprintf(`(dl_record 'page
+	dID, err := l.Eval(fmt.Sprintf(`(dl_record 'page
         ('id %d)
         ('points %s)
         ('angle %f)
         ('code %q)
     )`, p.id, lisppoints, p.angle, p.code))
+	if err != nil {
+		panic(fmt.Sprintf("err in page %d: %v", p.id, err))
+	}
 	return int(dID.AsNumber())
 }
 
