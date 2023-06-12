@@ -9,7 +9,6 @@ import (
 	"github.com/deosjr/whistle/datalog"
 	"github.com/deosjr/whistle/kanren"
 	"github.com/deosjr/whistle/lisp"
-	"github.com/northvolt/graphql-schema/model"
 )
 
 //go:embed talk.lisp
@@ -24,22 +23,6 @@ func LoadRealTalk() lisp.Lisp {
 	}
 	opencv.Load(l.Env)
 	northvolt.Load(l.Env)
-	id := "c-001697947722"
-	out, err := l.Eval(fmt.Sprintf("(dt:identity %q)", id))
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		identity := out.AsPrimitive().(model.NorthvoltIdentity)
-		fmt.Println(identity)
-	}
-	// from cache
-	out, err = l.Eval(fmt.Sprintf("(dt:identity %q)", id))
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		identity := out.AsPrimitive().(model.NorthvoltIdentity)
-		fmt.Println(identity)
-	}
 	return l
 }
 
@@ -64,7 +47,7 @@ func page2lisp(l lisp.Lisp, p page, pts []point) int {
         ('code %q)
     )`, p.id, lisppoints, p.angle, p.code))
 	if err != nil {
-		panic(err)
+		panic(fmt.Sprintf("err in page %d: %v", p.id, err))
 	}
 	return int(dID.AsNumber())
 }

@@ -83,6 +83,33 @@
           (let ((norm (point-div line (sqrt (+ (* (car line) (car line)) (* (cdr line) (cdr line)))))))
             (let ((end (point-add mid (point-mul norm (* pixelsPerCM ,?cm)))))
                 (gocv:line illu (point2d (car mid) (cdr mid)) (point2d (car end) (cdr end)) green 5)
-                #| TODO: if end is contained in another page, assert claim pointing-at page otherpage |#
+                (claim ,?page 'points-dot end)
                 ))))))
+
+(when ((points-dot ,?page ,?dot) ((page points) ,?other ,?points) ((page angle) ,?other ,?angle)) do
+  (if (not (eqv? ,?page ,?other))
+    (if (contained (quote ,?points) ,?angle (quote ,?dot))
+      (claim ,?page 'points-at ,?other))))
+
+#|
+// In reports whether p is in r.
+func (p Point) In(r Rectangle) bool {
+	return r.Min.X <= p.X && p.X < r.Max.X &&
+		r.Min.Y <= p.Y && p.Y < r.Max.Y
+}
+|#
+(define contained (lambda (points angle dot)
+    (let ((center (midpoint points)))
+      (let ((rotated (map (lambda (p) (rotateAround center p angle)) points))
+            (p (rotateAround center dot angle)))
+        (let ((min (car rotated))
+              (max (car (cdr (cdr rotated)))))
+          (and (and (and (< (car min) (car p))
+                    (< (car p) (car max)))
+                    (< (cdr min) (cdr p)))
+                    (< (cdr p) (cdr max))))))))
+
+(when ((points-at ,?from ,?to)) do
+  (claim ,?to 'highlighted 'red))
+
 )
