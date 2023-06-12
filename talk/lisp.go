@@ -32,6 +32,14 @@ func LoadRealTalk() lisp.Lisp {
 		identity := out.AsPrimitive().(model.NorthvoltIdentity)
 		fmt.Println(identity)
 	}
+	// from cache
+	out, err = l.Eval(fmt.Sprintf("(dt:identity %q)", id))
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		identity := out.AsPrimitive().(model.NorthvoltIdentity)
+		fmt.Println(identity)
+	}
 	return l
 }
 
