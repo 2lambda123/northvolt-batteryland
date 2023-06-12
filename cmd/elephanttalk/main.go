@@ -19,7 +19,7 @@ func main() {
 	talk.UseSimplifiedIDs()
 
 	//page1
-	talk.AddPageFromShorthand("ygybr", "brgry", "gbgyg", "bgryy", `(claim this 'modifies 'processdata)`)
+	talk.AddPageFromShorthand("ygybr", "brgry", "gbgyg", "bgryy", `(claim this 'modifies 'identityState)`)
 
 	//page2
 	talk.AddPageFromShorthand("yggyg", "rgyrb", "bybbg", "brgrg", `(claim this 'cell 'testid)`)

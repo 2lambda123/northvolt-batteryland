@@ -9,6 +9,8 @@ import (
 	"github.com/northvolt/go-service-digitaltwin/digitaltwin/digitaltwinhttp"
 	"github.com/northvolt/go-service-process/process"
 	"github.com/northvolt/go-service-process/process/processhttp"
+	"github.com/northvolt/go-service-quality/qualityservice"
+	"github.com/northvolt/go-service-quality/qualityservice/qualityservicehttp"
 	"github.com/northvolt/go-service/localrunner"
 	"github.com/northvolt/graphql-schema/model"
 )
@@ -21,6 +23,7 @@ var cache = map[string]map[lisp.SExpression]lisp.SExpression{}
 var (
 	dt digitaltwin.Service
 	ps process.Service
+	qs qualityservice.Service
 )
 
 // wrapper around nv service calls
@@ -29,8 +32,10 @@ func Load(env *lisp.Env) {
 	r := localrunner.NewLocalRunner()
 	dt = digitaltwinhttp.NewClient(r.FixedInstancer("/digitaltwin")).WithReqModifier(r.AuthorizeHeader())
 	ps = processhttp.NewClient(r.FixedInstancer("/process")).WithReqModifier(r.AuthorizeHeader())
+	qs = qualityservicehttp.NewClient(r.FixedInstancer("/quality")).WithReqModifier(r.AuthorizeHeader())
 	cache["dt:identity"] = map[lisp.SExpression]lisp.SExpression{}
 	cache["ps:results"] = map[lisp.SExpression]lisp.SExpression{}
+	cache["ps:quality"] = map[lisp.SExpression]lisp.SExpression{}
 
 	// digitaltwin
 	env.AddBuiltin("dt:identity", dtIdentity)
@@ -40,6 +45,9 @@ func Load(env *lisp.Env) {
 	// process
 	env.AddBuiltin("ps:results", psResults)
 	env.AddBuiltin("pr:kind", presultKind)
+
+	// quality
+	env.AddBuiltin("qs:identityState", identityState)
 }
 
 func dtIdentity(args []lisp.SExpression) (lisp.SExpression, error) {
@@ -101,4 +109,21 @@ func psResults(args []lisp.SExpression) (lisp.SExpression, error) {
 func presultKind(args []lisp.SExpression) (lisp.SExpression, error) {
 	pr := args[0].AsPrimitive().(*model.DefaultProcessResult)
 	return lisp.NewPrimitive(string(pr.Kind)), nil
+}
+
+func identityState(args []lisp.SExpression) (lisp.SExpression, error) {
+	ctx := context.Background()
+	arg0 := args[0]
+	if cached, ok := cache["qs:identityState"][arg0]; ok {
+		return cached, nil
+	}
+
+	nvid := arg0.AsPrimitive().(string)
+	res, err := qs.GetIdentityState(ctx, nvid)
+	if err != nil {
+		return nil, err
+	}
+	result := lisp.NewPrimitive(res.Status.String())
+	cache["qs:identityState"][arg0] = result
+	return result, nil
 }

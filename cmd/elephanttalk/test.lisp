@@ -32,8 +32,7 @@
 (define midpoint (lambda (points)
   (point-div (foldl point-add points (cons 0 0)) (length points))))
 
-(define points->rect (lambda (points)
-  (let ((rects (map (lambda (p)
+(define points->rect (lambda (points) (let ((rects (map (lambda (p)
     (let ((min (point-add p (cons -1 -1))) (max (point-add p (cons 1 1))))
       (make-rectangle (car min) (cdr min) (car max) (cdr max)))) points)))
         #| (foldl rects rect:union (car rects)) |#
@@ -127,4 +126,14 @@
 (when ((modifies ,?page ,?func) (points-at ,?page ,?cellpage) (cell ,?cellpage ,?id) ((page points) ,?cellpage ,?points) ((page angle) ,?cellpage ,?angle)) do
   (,?func ,?id (quote ,?points) ,?angle))
 
+(define identityState (lambda (id points angle)
+    (let ((center (midpoint points))
+          (ulhc (car points))
+          (cellid (symbol->string id))
+          (unangle (* -360 (/ angle (* 2 pi))))
+          (illu (make-illumination)))
+      (let ((m (gocv:rotation_matrix2D (car center) (cdr center) unangle 1.0))
+            (identityState (qs:identityState cellid)))
+        (gocv:text illu (identityState) (point2d (car center) (cdr center)) 0.5 green 2)
+        (gocv:warp_affine illu illu m 1280 720)))))
 )
