@@ -102,8 +102,6 @@
                     (< (cdr min) (cdr p)))
                     (< (cdr p) (cdr max))))))))
 
-(when ((machine ,?page ,?fbs)) do (display (symbol->string (quote ,?fbs))))
-
 (define print-results (lambda (illu results p d)
   (let ((offset (+ d 20)))
     (if (not (null? results))
@@ -111,20 +109,23 @@
         (gocv:text illu (pr:kind (car results)) (point2d (+ 20 (car p)) (+ offset (cdr p))) 0.5 red 2)
         (print-results illu (cdr results) p offset))))))
 
-(when ((cell ,?page ,?id) ((page points) ,?page ,?points) ((page angle) ,?page ,?angle)) do
-    (let ((center (midpoint (quote ,?points)))
-          (ulhc (car (quote ,?points)))
-          (cellid (symbol->string (quote ,?id)))
-          (unangle (* -360 (/ ,?angle (* 2 pi))))
+(define processdata (lambda (id points angle)
+    (let ((center (midpoint points))
+          (ulhc (car points))
+          (cellid (symbol->string id))
+          (unangle (* -360 (/ angle (* 2 pi))))
           (illu (make-illumination)))
       (let ((m (gocv:rotation_matrix2D (car center) (cdr center) unangle 1.0))
             (results (ps:results cellid))
             (cell (identity->cell (dt:identity cellid))))
         (gocv:text illu (cell:id cell) (point2d (+ 20 (car ulhc)) (+ 20 (cdr ulhc))) 0.5 red 2)
         (print-results illu results ulhc 20)
-        (gocv:warp_affine illu illu m 1280 720))))
+        (gocv:warp_affine illu illu m 1280 720)))))
 
-(when ((points-at ,?from ,?to)) do
-  (claim ,?to 'highlighted 'red))
+(when ((modifies ,?page ,?func)) do
+  (claim ,?page 'pointing 30))
+
+(when ((modifies ,?page ,?func) (points-at ,?page ,?cellpage) (cell ,?cellpage ,?id) ((page points) ,?cellpage ,?points) ((page angle) ,?cellpage ,?angle)) do
+  (,?func (quote ,?id) (quote ,?points) ,?angle))
 
 )
