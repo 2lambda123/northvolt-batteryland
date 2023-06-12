@@ -7,7 +7,7 @@ import (
 	"math"
 	"time"
 
-	"github.com/deosjr/elephanttalk/opencv"
+	"github.com/northvolt/batteryland/opencv"
 	"gocv.io/x/gocv"
 )
 

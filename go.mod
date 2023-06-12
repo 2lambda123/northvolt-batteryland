@@ -1,10 +1,14 @@
-module github.com/deosjr/elephanttalk
+module github.com/northvolt/batteryland
 
 go 1.20
 
 require (
+	github.com/deosjr/elephanttalk v0.0.0-20230612083716-e04320a88711
 	github.com/deosjr/whistle v0.0.0-20230606141022-90a4546b49c5
+	github.com/northvolt/go-service v1.0.144
 	github.com/northvolt/go-service-digitaltwin v0.0.68
+	github.com/northvolt/go-service-process v0.0.20
+	github.com/northvolt/graphql-schema v1.0.20230531131437
 	gocv.io/x/gocv v0.27.0
 )
 
@@ -33,16 +37,15 @@ require (
 	github.com/liip/sheriff v0.11.1 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
-	github.com/northvolt/go-service v1.0.144 // indirect
 	github.com/northvolt/go-service-alarm v0.0.7 // indirect
 	github.com/northvolt/go-service-downtime v0.0.53 // indirect
 	github.com/northvolt/go-service-event v0.13.0 // indirect
-	github.com/northvolt/graphql-schema v1.0.20230531131437 // indirect
 	github.com/northvolt/lib v1.0.20230525113838 // indirect
 	github.com/olivere/elastic v6.2.37+incompatible // indirect
 	github.com/pascaldekloe/name v1.0.1 // indirect
 	github.com/paulmach/orb v0.2.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/segmentio/ksuid v1.0.3 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.40.0 // indirect
 	go.opentelemetry.io/otel v1.7.0 // indirect

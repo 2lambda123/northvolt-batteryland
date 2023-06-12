@@ -74,6 +74,8 @@ github.com/cncf/xds/go v0.0.0-20211011173535-cb28da3451f1/go.mod h1:eXthEFrGJvWH
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/deosjr/elephanttalk v0.0.0-20230612083716-e04320a88711 h1:bPwweyqTKZiCzJdexljtBxSLe4WCB2jMh3+fdUQn3fQ=
+github.com/deosjr/elephanttalk v0.0.0-20230612083716-e04320a88711/go.mod h1:Pw/CIz3bauJlKq1/A/q3UuWkuDqqb8+YzFsGkQsclUc=
 github.com/deosjr/whistle v0.0.0-20230606141022-90a4546b49c5 h1:aSuo5bPaU/iE4sp08cWaua0BLHEPK26yIvHWFeQhaGs=
 github.com/deosjr/whistle v0.0.0-20230606141022-90a4546b49c5/go.mod h1:AqJExKTUYXaa+5DDBu0J+d4ajZbabQEiafNepi/Jwvk=
 github.com/eapache/go-resiliency v1.3.0 h1:RRL0nge+cWGlxXbUzJ7yMcq6w2XBEr19dCN6HECGaT0=
@@ -108,6 +110,7 @@ github.com/go-logr/logr v1.2.3 h1:2DntVwHkVopvECVRSlL5PSo9eG+cAkDCuckLubN+rq0=
 github.com/go-logr/logr v1.2.3/go.mod h1:jdQByPbusPIv2/zmleS9BjJVeZ6kBagPoEUsqbVz/1A=
 github.com/go-logr/stdr v1.2.2 h1:hSWxHoqTgW2S2qGc0LTAI563KZ5YKYRhT3MFKZMbjag=
 github.com/go-logr/stdr v1.2.2/go.mod h1:mMo/vtBO5dYbehREoey6XUKy/eSumjCCveDpRre4VKE=
+github.com/go-test/deep v1.0.8 h1:TDsG77qcSprGbC6vTN8OuXp5g+J+b5Pcguhf7Zt61VM=
 github.com/gogo/protobuf v1.3.1/go.mod h1:SlYgWuQ5SjCEi6WLHjHCa1yvBfUnHcTbrrZtXPKa29o=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
 github.com/golang/glog v1.0.0 h1:nfP3RFugxnNRyKgeWd4oI1nYvXpxrx8ck8ZrcizshdQ=
@@ -222,6 +225,8 @@ github.com/northvolt/go-service-downtime v0.0.53 h1:FM28czrgS0taakgSsVxRyJL+e/9Y
 github.com/northvolt/go-service-downtime v0.0.53/go.mod h1:+X55DkTgIE2z/KXnnef+/h26V2DXhzvB21yaq45aSZ0=
 github.com/northvolt/go-service-event v0.13.0 h1:etwe4mXwc4bUyV1nSy+mB5pV+3atPKR5fz294ycmvRc=
 github.com/northvolt/go-service-event v0.13.0/go.mod h1:DBCcZBTL7FbHo46VzSLf5UzGo7CUuLX2ZXscywfVfj8=
+github.com/northvolt/go-service-process v0.0.20 h1:ABty18vTCfKSPjDDFre6Sw9LfclEB8CQ3FM3+tXCLNQ=
+github.com/northvolt/go-service-process v0.0.20/go.mod h1:mKhjdvKPrgkE9tD+YQCrIfBcZvh6X3bOxW8e7U6/AIk=
 github.com/northvolt/graphql-schema v1.0.20230531131437 h1:EiK57pV58/Osec6ycORw3eZ1Pu+85h+l03Wn6JS+sxY=
 github.com/northvolt/graphql-schema v1.0.20230531131437/go.mod h1:B9GY05WI9AfHsd6rFzfbi4nfKhB6+gIyshArkQ0Rc5c=
 github.com/northvolt/lib v1.0.20230525113838 h1:+tv1UaxzVoi4pwAtiZUcabpZkYBNQB+L4FkbY67bSU8=
@@ -247,6 +252,8 @@ github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:
 github.com/rogpeppe/fastuuid v1.1.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
 github.com/rogpeppe/fastuuid v1.2.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
+github.com/segmentio/ksuid v1.0.3 h1:FoResxvleQwYiPAVKe1tMUlEirodZqlqglIuFsdDntY=
+github.com/segmentio/ksuid v1.0.3/go.mod h1:/XUiZBD3kVx5SmUOl55voK5yeAbBNNIed+2O73XgrPE=
 github.com/sergi/go-diff v1.0.0/go.mod h1:0CfEIISq7TuYL3j771MWULgwwjU+GofnZX9QAmXWZgo=
 github.com/smartystreets/assertions v1.0.0/go.mod h1:kHHU4qYBaI3q23Pp3VPrmWhuIUrLW/7eUrw0BU5VaoM=
 github.com/smartystreets/go-aws-auth v0.0.0-20180515143844-0c1422d1fdb9/go.mod h1:SnhjPscd9TpLiy1LpzGSKh3bXCfxxXuqd9xmQJy3slM=

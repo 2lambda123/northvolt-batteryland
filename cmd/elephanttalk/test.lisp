@@ -91,13 +91,6 @@
     (if (contained (quote ,?points) ,?angle (quote ,?dot))
       (claim ,?page 'points-at ,?other))))
 
-#|
-// In reports whether p is in r.
-func (p Point) In(r Rectangle) bool {
-	return r.Min.X <= p.X && p.X < r.Max.X &&
-		r.Min.Y <= p.Y && p.Y < r.Max.Y
-}
-|#
 (define contained (lambda (points angle dot)
     (let ((center (midpoint points)))
       (let ((rotated (map (lambda (p) (rotateAround center p angle)) points))
@@ -108,6 +101,28 @@ func (p Point) In(r Rectangle) bool {
                     (< (car p) (car max)))
                     (< (cdr min) (cdr p)))
                     (< (cdr p) (cdr max))))))))
+
+(when ((machine ,?page ,?fbs)) do (display (symbol->string (quote ,?fbs))))
+
+(define print-results (lambda (illu results p d)
+  (let ((offset (+ d 20)))
+    (if (not (null? results))
+      (begin
+        (gocv:text illu (pr:kind (car results)) (point2d (+ 20 (car p)) (+ offset (cdr p))) 0.5 red 2)
+        (print-results illu (cdr results) p offset))))))
+
+(when ((cell ,?page ,?id) ((page points) ,?page ,?points) ((page angle) ,?page ,?angle)) do
+    (let ((center (midpoint (quote ,?points)))
+          (ulhc (car (quote ,?points)))
+          (cellid (symbol->string (quote ,?id)))
+          (unangle (* -360 (/ ,?angle (* 2 pi))))
+          (illu (make-illumination)))
+      (let ((m (gocv:rotation_matrix2D (car center) (cdr center) unangle 1.0))
+            (results (ps:results cellid))
+            (cell (identity->cell (dt:identity cellid))))
+        (gocv:text illu (cell:id cell) (point2d (+ 20 (car ulhc)) (+ 20 (cdr ulhc))) 0.5 red 2)
+        (print-results illu results ulhc 20)
+        (gocv:warp_affine illu illu m 1280 720))))
 
 (when ((points-at ,?from ,?to)) do
   (claim ,?to 'highlighted 'red))
