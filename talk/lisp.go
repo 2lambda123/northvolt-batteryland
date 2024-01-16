@@ -4,11 +4,11 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/deosjr/elephanttalk/northvolt"
-	"github.com/deosjr/elephanttalk/opencv"
 	"github.com/deosjr/whistle/datalog"
 	"github.com/deosjr/whistle/kanren"
 	"github.com/deosjr/whistle/lisp"
+	"github.com/northvolt/batteryland/northvolt"
+	"github.com/northvolt/batteryland/opencv"
 )
 
 //go:embed talk.lisp

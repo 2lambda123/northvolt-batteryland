@@ -32,8 +32,7 @@
 (define midpoint (lambda (points)
   (point-div (foldl point-add points (cons 0 0)) (length points))))
 
-(define points->rect (lambda (points)
-  (let ((rects (map (lambda (p)
+(define points->rect (lambda (points) (let ((rects (map (lambda (p)
     (let ((min (point-add p (cons -1 -1))) (max (point-add p (cons 1 1))))
       (make-rectangle (car min) (cdr min) (car max) (cdr max)))) points)))
         #| (foldl rects rect:union (car rects)) |#
@@ -91,13 +90,6 @@
     (if (contained (quote ,?points) ,?angle (quote ,?dot))
       (claim ,?page 'points-at ,?other))))
 
-#|
-// In reports whether p is in r.
-func (p Point) In(r Rectangle) bool {
-	return r.Min.X <= p.X && p.X < r.Max.X &&
-		r.Min.Y <= p.Y && p.Y < r.Max.Y
-}
-|#
 (define contained (lambda (points angle dot)
     (let ((center (midpoint points)))
       (let ((rotated (map (lambda (p) (rotateAround center p angle)) points))
@@ -109,7 +101,39 @@ func (p Point) In(r Rectangle) bool {
                     (< (cdr min) (cdr p)))
                     (< (cdr p) (cdr max))))))))
 
-(when ((points-at ,?from ,?to)) do
-  (claim ,?to 'highlighted 'red))
+(define print-results (lambda (illu results p d)
+  (let ((offset (+ d 20)))
+    (if (not (null? results))
+      (begin
+        (gocv:text illu (pr:kind (car results)) (point2d (+ 20 (car p)) (+ offset (cdr p))) 0.5 red 2)
+        (print-results illu (cdr results) p offset))))))
 
+(define processdata (lambda (cellid points angle)
+    (let ((center (midpoint points))
+          (ulhc (car points))
+          (unangle (* -360 (/ angle (* 2 pi))))
+          (illu (make-illumination)))
+      (let ((m (gocv:rotation_matrix2D (car center) (cdr center) unangle 1.0))
+            (results (ps:results cellid))
+            (cell (identity->cell (dt:identity cellid))))
+        (gocv:text illu (cell:id cell) (point2d (+ 20 (car ulhc)) (+ 20 (cdr ulhc))) 0.5 red 2)
+        (print-results illu results ulhc 20)
+        (gocv:warp_affine illu illu m 1280 720)))))
+
+(when ((modifies ,?page ,?func)) do
+  (claim ,?page 'pointing 30))
+
+(when ((modifies ,?page ,?func) (points-at ,?page ,?cellpage) (cell ,?cellpage ,?id) ((page points) ,?cellpage ,?points) ((page angle) ,?cellpage ,?angle)) do
+  (,?func ,?id (quote ,?points) ,?angle))
+
+(define identityState (lambda (id points angle)
+    (let ((center (midpoint points))
+          (ulhc (car points))
+          (cellid (symbol->string id))
+          (unangle (* -360 (/ angle (* 2 pi))))
+          (illu (make-illumination)))
+      (let ((m (gocv:rotation_matrix2D (car center) (cdr center) unangle 1.0))
+            (identityState (qs:identityState cellid)))
+        (gocv:text illu (identityState) (point2d (car center) (cdr center)) 0.5 green 2)
+        (gocv:warp_affine illu illu m 1280 720)))))
 )
